@@ -1,4 +1,4 @@
-vmichel95.gradle
+vmichel95.prototool
 =========
 
 Install [uber/prototool](https://github.com/uber/prototool)

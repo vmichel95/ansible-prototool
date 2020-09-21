@@ -40,6 +40,6 @@
   become: yes
   become_user: root
   file:
-    src: '{{ prototool_install_dir }}/prototool'
+    src: '{{ prototool_install_dir }}/prototool/bin/prototool'
     dest: '{{ prototool_parent_install_dir }}/bin/prototool'
     state: link

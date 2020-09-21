@@ -1,0 +1,7 @@
+---
+# vars file for prototool
+prototool_platform: '{{ prototool_os }}-{{ prototool_arch }}'
+prototool_archive: 'prototool-{{ prototool_platform }}.{{ prototool_archivetype }}'
+prototool_url: '{{ prototool_mirror }}/{{ prototool_version }}/{{ prototool_archive }}'
+prototool_checksum: '{{ prototool_checksums[prototool_version][prototool_platform] }}'
+prototool_install_dir: '{{ prototool_parent_install_dir }}/prototool-{{ prototool_version }}'

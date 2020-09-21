@@ -1,0 +1,45 @@
+---
+- name: look for install
+  become: yes
+  stat:
+    path: '{{ prototool_install_dir }}'
+  changed_when: False
+  register: prototool_binary
+- when: not prototool_binary.stat.exists
+  block:
+    - name: download...
+      become: yes
+      become_user: root
+      get_url:
+        url: '{{ prototool_url }}'
+        dest: /tmp/{{ prototool_archive }}
+        checksum: '{{ prototool_checksum }}'
+        mode: 0644
+    - name: mkdir
+      become: yes
+      become_user: root
+      file:
+        path: '{{ prototool_install_dir }}'
+        state: directory
+        mode: 0755
+    - name: unarchive
+      become: yes
+      become_user: root
+      unarchive:
+        src: /tmp/{{ prototool_archive }}
+        dest: '{{ prototool_install_dir }}'
+        creates: '{{ prototool_install_dir }}/prototool'
+  always:
+    - name: delete
+      become: yes
+      become_user: root
+      file:
+        path: /tmp/{{ prototool_archive }}
+        state: absent
+- name: link
+  become: yes
+  become_user: root
+  file:
+    src: '{{ prototool_install_dir }}/prototool/bin/prototool'
+    dest: '{{ prototool_parent_install_dir }}/bin/prototool'
+    state: link
